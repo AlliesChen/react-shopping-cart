@@ -1,3 +1,5 @@
 export function About() {
-    return <h1 className="text-3xl">About</h1>
+    return <div className="mx-3">
+        <h1 className="mb-3 text-3xl">About</h1>
+    </div>
 }
