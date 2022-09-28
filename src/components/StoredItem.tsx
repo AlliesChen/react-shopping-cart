@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useShoppingCart } from "../context/ShoppingCartContext";
 import { formatCurrency } from "../utilities/formatCurrency";
 
 interface StoredItemProps {
@@ -9,30 +10,34 @@ interface StoredItemProps {
 }
 
 export function StoredItem({ id, name, price, imgUrl }: StoredItemProps) {
-  const [quantity, setQuantity] = useState(0);
-
-  function handleClick(): void {
-    setQuantity((prev) => (prev += 1));
-  }
-
+  const {
+    getItemQuantity,
+    increaseCartQuantity,
+    decreaseCartQuantity,
+    removeFromCart,
+  } = useShoppingCart();
+  const quantity = getItemQuantity(id)
+  
   const QuantityButtons =
     quantity === 0 ? (
       <button
         className="mt-3 py-2 w-full bg-sky-500 rounded text-sky-50"
-        onClick={handleClick}
+        onClick={() => increaseCartQuantity(id)}
       >
         + Add To Cart
       </button>
     ) : (
       <div className="flex flex-col items-center gap-2">
         <div className="flex gap-3 items-center">
-          <button className="bg-sky-500 text-white w-8 h-8 rounded">-</button>
+          <button onClick={() => decreaseCartQuantity(id)} className="bg-sky-500 text-white w-8 h-8 rounded">-</button>
           <div>
             <span className="text-xl">{quantity}</span> in cart
           </div>
-          <button className="bg-sky-500 text-white w-8 h-8 rounded">+</button>
+          <button onClick={() => increaseCartQuantity(id)} className="bg-sky-500 text-white w-8 h-8 rounded">+</button>
         </div>
-        <button className="p-1 bg-rose-500 text-white text-sm rounded">Remove</button>
+        <button onClick={() => removeFromCart(id)} className="p-1 bg-rose-500 text-white text-sm rounded">
+          Remove
+        </button>
       </div>
     );
 
