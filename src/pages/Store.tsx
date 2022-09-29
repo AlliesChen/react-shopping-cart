@@ -6,7 +6,7 @@ export function Store() {
     <li key={item.id}><StoredItem {...item}/></li>)
   );
   return (
-    <div className="mx-3">
+    <div className="mx-3 flex flex-col gap-4">
       <h1 className="mb-3 text-3xl">Store</h1>
       <ul className="grid gap-3 xl:grid-cols-3 lg:grid-cols-2 md:grid-cols-1">{columns}</ul>
     </div>

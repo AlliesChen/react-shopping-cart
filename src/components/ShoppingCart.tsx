@@ -2,6 +2,8 @@ import { XMarkIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { useShoppingCart } from "../context/ShoppingCartContext";
 import { CartItem } from "./CartItem";
+import storeItems from "../data/items.json"
+import { formatCurrency } from "../utilities/formatCurrency";
 
 interface ShoppingCartProps {
   isOpen: boolean;
@@ -15,13 +17,20 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps) {
     <CartItem key={item.id} {...item} />
   ));
 
+  const TotalCharge = () => {
+    const total = cartItems.reduce((accum, cartItem) => {
+      const stock = storeItems.find(item => item.id === cartItem.id )
+      return accum + (stock?.price || 0) * cartItem.quantity
+    }, 0)
+    return <div className="mt-6 sm:mt-12 lg:mt-20 text-right sm:text-xl lg:text-2xl font-bold">Total: {formatCurrency(total)}</div>
+  }
+
   function handleTransition() {
     setIsExpand(false);
     setTimeout(closeCart, 300);
   }
 
   useEffect(() => {
-    console.log("hello");
     setIsExpand(isOpen);
   }, [isOpen]);
 
@@ -35,19 +44,20 @@ export function ShoppingCart({ isOpen }: ShoppingCartProps) {
     >
       <div onClick={handleTransition} className="w-1/3 h-full"></div>
       <section
-        className={`p-5 ${
+        className={`p-2 sm:p-5 lg:p-10 ${
           isExpand ? "translate-x-0" : "translate-x-full"
-        } transition-transform w-2/3 h-full bg-white`}
+        } transition-transform overflow-x-auto overflow-y-auto w-2/3 h-full bg-white`}
       >
         <header className="flex justify-between items-center">
-          <h2 className="text-lg font-bold">Cart</h2>
-          <button onClick={handleTransition} className="w-6 h-6">
+          <h2 className="text-lg lg:text-2xl font-bold">Cart</h2>
+          <button onClick={handleTransition} className="w-6 h-6 lg:w-8 lg:h-8">
             <XMarkIcon />
           </button>
         </header>
-        <ul className="mt-12 flex flex-col gap-4 overflow-y-auto">
+        <ul className="mt-12 flex flex-col gap-4">
           {CartItems}
         </ul>
+        <TotalCharge />
       </section>
     </div>
   );
