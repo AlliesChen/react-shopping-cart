@@ -2,6 +2,8 @@
 
 This app is built with React, TypeScript, and Tailwind CSS.
 
+Live demo: https://react-shopping-cart-8adu.vercel.app/store
+
 Origin: https://youtu.be/lATafp15HWA
 
 *It's Bootstrap rather than Tailwind which the UI framework that is used in The tutorial.
