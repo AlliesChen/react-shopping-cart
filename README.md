@@ -2,7 +2,7 @@
 
 This app is built with React, TypeScript, and Tailwind CSS.
 
-Live demo: https://react-shopping-cart-8adu.vercel.app/store
+Live demo: http://react-shopping-cart-8adu.vercel.app/
 
 Origin: https://youtu.be/lATafp15HWA
 
